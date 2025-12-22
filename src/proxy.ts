@@ -15,15 +15,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (Next.js static files)
-     * - _next/image (Next.js image optimization files)
-     * - favicon.ico, *.svg, *.png, *.jpg, *.jpeg, *.gif, *.webp (static assets)
-     * - (public) route group pages
-     */
-    "/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$|\\(public\\)).*)",
-  ],
+  matcher: ["/dashboard/:path*"],
 }
