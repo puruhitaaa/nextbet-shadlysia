@@ -1,5 +1,5 @@
 import { betterAuth } from "better-auth"
-import { drizzleAdapter } from "better-auth/adapters/drizzle"
+import { prismaAdapter } from "better-auth/adapters/prisma"
 import {
   admin,
   haveIBeenPwned,
@@ -8,11 +8,11 @@ import {
 } from "better-auth/plugins"
 
 import { env } from "@/env.mjs"
-import { db } from "@/server/db"
+import { prisma } from "@/server/db"
 
 export const auth = betterAuth({
-  database: drizzleAdapter(db, {
-    provider: "pg",
+  database: prismaAdapter(prisma, {
+    provider: "postgresql",
   }),
   emailAndPassword: {
     enabled: true,

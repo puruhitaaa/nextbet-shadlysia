@@ -1,18 +1,10 @@
-import { drizzle } from "drizzle-orm/postgres-js"
-import postgres from "postgres"
-
+import { PrismaPg } from "@prisma/adapter-pg"
 import { env } from "@/env.mjs"
-import * as schema from "./schema"
+import { PrismaClient } from "./prisma/generated/prisma/client"
 
-/**
- * Cache the database connection in development. This avoids creating a new connection on every HMR
- * update.
- */
-const globalForDb = globalThis as unknown as {
-  conn: postgres.Sql | undefined
-}
+const connectionString = env.DATABASE_URL
 
-const conn = globalForDb.conn ?? postgres(env.DATABASE_URL)
-if (env.NODE_ENV !== "production") globalForDb.conn = conn
+const adapter = new PrismaPg({ connectionString })
+const prisma = new PrismaClient({ adapter })
 
-export const db = drizzle(conn, { schema })
+export { prisma }
